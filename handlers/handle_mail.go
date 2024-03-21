@@ -46,7 +46,9 @@ func Handle_mail(c fiber.Ctx) error {
 	// Set the HTML body using the template result
 	m.SetBody("text/html", bodyContent.String())
 	d := mail.NewDialer(get_var("mail_server_domain"), 587, get_var("mail_server_sender"), get_var("mail_server_passwd"))
+	d.LocalName = "go_cy_form_mailer"
 	if err := d.DialAndSend(m); err != nil {
+		log.Print(d)
 		log.Print(err)
 		return c.Status(fiber.StatusInternalServerError).Send(functions.GenerateJsonResponse(false, "500 - Ошибка сервера"))
 	}

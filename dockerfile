@@ -18,6 +18,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o app ./cmd/main.go
 
 # Final Stage
 FROM alpine:latest
+
 # Meta
 LABEL maintainer="***REMOVED***>"
 LABEL description="Clean Year Form handler"
