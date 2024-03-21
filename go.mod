@@ -1,4 +1,4 @@
-module form_mailer
+module go_cy_form_mailer
 
 go 1.22.0
 

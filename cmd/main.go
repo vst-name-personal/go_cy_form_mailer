@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	SetupRouters "form_mailer/internals/routes"
+	SetupRouters "go_cy_form_mailer/pkg/routes"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/logger"
