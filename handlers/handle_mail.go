@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"time"
-
+	env_var "go_cy_form_mailer/cmd/env"
+	"go_cy_form_mailer/functions"
 	"go_cy_form_mailer/internals/datastructs"
-	"go_cy_form_mailer/pkg/functions"
+	"log"
+	"time"
 
 	"github.com/go-mail/mail"
 	"github.com/gofiber/fiber/v3"
@@ -30,26 +31,31 @@ func Handle_mail(c fiber.Ctx) error {
 		Admin:       false,
 	}
 
-	// Parse the HTML template and get the body content
+	// Parse the HTML template
 	bodyContent, err := functions.PrepareMailTemplate(&data)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).Send(functions.GenerateJsonResponse(false, "Ошибка сервера"))
+		return c.Status(fiber.StatusInternalServerError).Send(functions.GenerateJsonResponse(false, "500 - Ошибка сервера"))
 	}
 
-	// Create the mail message
+	// Define the mail message
 	m := mail.NewMessage()
-	m.SetHeader("From", "noreply@cleanyear.ru")
-	m.SetHeader("To", "***REMOVED***")
+	m.SetHeader("From", get_var("mail_server_sender"))
+	m.SetHeader("To", get_var("mail_server_receiver"))
 	m.SetHeader("Subject", "Форма на лендинге")
 
 	// Set the HTML body using the template result
 	m.SetBody("text/html", bodyContent.String())
-
-	d := mail.NewDialer("***REMOVED***", 587, "noreply@cleanyear.ru", ***REMOVED***)
-
+	d := mail.NewDialer(get_var("mail_server_domain"), 587, get_var("mail_server_sender"), get_var("mail_server_passwd"))
 	if err := d.DialAndSend(m); err != nil {
-		return c.Status(fiber.StatusInternalServerError).Send(functions.GenerateJsonResponse(false, "Ошибка сервера"))
+		log.Print(err)
+		return c.Status(fiber.StatusInternalServerError).Send(functions.GenerateJsonResponse(false, "500 - Ошибка сервера"))
 	}
-
-	return c.Send(functions.GenerateJsonResponse(true, "Заявка успешно отправлена"))
+	return c.Send(functions.GenerateJsonResponse(true, "200 - Форма успешно отправлена"))
+}
+func get_var(str string) string {
+	// Get singleton instance
+	s := env_var.GetInstance()
+	// Access data from singleton
+	log.Printf(s.Data[str])
+	return s.Data[str]
 }

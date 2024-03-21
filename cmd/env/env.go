@@ -1,12 +1,11 @@
 package env_var
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"sync"
 )
 
-// Singleton struct to hold global data
 type Singleton struct {
 	Data map[string]string
 }
@@ -23,21 +22,19 @@ func GetInstance() *Singleton {
 
 		// Load environment variables into singleton data
 		instance.LoadEnv()
+		log.Println("loading env vars")
+
 	})
 	return instance
 }
 
 // LoadEnv loads environment variables into singleton data
 func (s *Singleton) LoadEnv() {
-	// Load environment variables into singleton data
-	s.Data["ENV_VAR_NAME"] = os.Getenv("ENV_VAR_NAME")
-	// Add more environment variables as needed
-}
 
-func env_var() {
-	// Get singleton instance
-	s := GetInstance()
+	s.Data["mail_server_domain"] = os.Getenv("mail_server_domain")
+	s.Data["mail_server_sender"] = os.Getenv("mail_server_sender")
+	s.Data["mail_server_receiver"] = os.Getenv("mail_server_receiver")
+	s.Data["mail_server_passwd"] = os.Getenv("mail_server_passwd")
 
-	// Access data from singleton
-	fmt.Println("ENV_VAR_NAME:", s.Data["ENV_VAR_NAME"])
+
 }

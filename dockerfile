@@ -14,12 +14,11 @@ RUN go mod download
 COPY . .
 
 # Build the Go binary
-RUN CGO_ENABLED=0 GOOS=linux go build -o app .
-#RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o app ./cmd/main.go
 
 # Final Stage
 FROM alpine:latest
-#meta
+# Meta
 LABEL maintainer="***REMOVED***>"
 LABEL description="Clean Year Form handler"
 LABEL version="0.1"
@@ -32,8 +31,8 @@ WORKDIR /root/
 # Copy the built binary from the build stage
 COPY --from=build /app/app .
 
-# Expose any ports the app uses
+# Expose ports
 EXPOSE 8080
 
-# Command to run the executable
+# Run the executable
 CMD ./app

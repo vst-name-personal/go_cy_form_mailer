@@ -1,4 +1,7 @@
 .DS_Store
+.env
+docker-compose.yaml
+.vscode
 *.[56789ao]
 *.a[56789o]
 *.so
