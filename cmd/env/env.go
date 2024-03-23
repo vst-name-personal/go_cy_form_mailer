@@ -45,7 +45,13 @@ func (s *Singleton) LoadEnv() {
 
 	// If not set, load from .env
 	if len(s.Data) != len(requiredVars) {
+		log.Println("Loading from .env")
 		err := godotenv.Load(".env")
+		for _, v := range requiredVars {
+			if value := os.Getenv(v); value != "" {
+				s.Data[v] = value
+			}
+		}
 		if err != nil {
 			log.Fatal("Error loading .env file")
 		}
