@@ -1,54 +1,97 @@
+# Ignore macOS .DS_Store files
 .DS_Store
+
+# Ignore environment configuration files
 .env
+
+# Ignore Docker Compose configuration file
 docker-compose.yaml
+
+# Ignore Visual Studio Code workspace settings
 .vscode
-*.[56789ao]
-*.a[56789o]
+
+# Ignore compiled object files, libraries, and executables
+*.a
 *.so
 *.pyc
-._*
-.nfs.*
-[56789a].out
+*.out
+*.exe
+
+# Ignore temporary files and backups
 *~
+.*.swp
 *.orig
 *.rej
-*.exe
-.*.swp
-core
+.idea
+
+# Ignore files generated during build and testing
+_test
+_testmain.go
+_build
+_version.cache
+_build.out
+_goinstall.log
+_last-change
+_test.out
+_test/garbage/*.out
+_test/pass.out
+_test/run.out
+_test/times.out
+
+# Ignore compiled Go source files
 *.cgo*.go
 *.cgo*.c
 _cgo_*
 _obj
-_test
-_testmain.go
-__debug*
-/VERSION.cache
-/bin/
-/build.out
-/doc/articles/wiki/*.bin
-/goinstall.log
-/last-change
-/misc/cgo/life/run.out
-/misc/cgo/stdio/run.out
-/misc/cgo/testso/main
-/src/*.*/
-/src/cmd/cgo/zdefaultcc.go
-/src/cmd/dist/dist
-/src/cmd/go/internal/cfg/zdefaultcc.go
-/src/cmd/internal/objabi/zbootstrap.go
-/src/go/build/zcgo.go
-/src/go/doc/headscan
-/src/internal/buildcfg/zbootstrap.go
-/src/runtime/internal/sys/zversion.go
-/src/unicode/maketables
-/src/time/tzdata/zzipdata.go
-/test.out
-/test/garbage/*.out
-/test/pass.out
-/test/run.out
-/test/times.out
+_bin
+_doc/articles/wiki/*.bin
+_misc/cgo/life/run.out
+_misc/cgo/stdio/run.out
+_misc/cgo/testso/main
+_src/cmd/cgo/zdefaultcc.go
+_src/cmd/dist/dist
+_src/cmd/go/internal/cfg/zdefaultcc.go
+_src/cmd/internal/objabi/zbootstrap.go
+_src/go/build/zcgo.go
+_src/go/doc/headscan
+_src/internal/buildcfg/zbootstrap.go
+_src/runtime/internal/sys/zversion.go
+_src/unicode/maketables
+_src/time/tzdata/zzipdata.go
 
-# This file includes artifacts of Go build that should not be checked in.
-# For files created by specific development environment (e.g. editor),
-# use alternative ways to exclude files from git.
-# For example, set up .git/info/exclude or use a global .gitignore.
+# Ignore vendor directories and dependencies
+/vendor/
+vendor/
+vendor
+_godeps/
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+*.tmp
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# IDE files
+.vscode
+.DS_Store
+.idea
+
+# Misc
+*.fiber.gz
+*.fasthttp.gz
+*.pprof
+*.workspace
+
+# Dependencies
+/vendor/
+vendor/
+vendor
+/Godeps/

@@ -8,17 +8,14 @@ import (
 	SetupRouters "go_cy_form_mailer/routes"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/addon/retry"
 	"github.com/gofiber/fiber/v3/middleware/logger"
 	"github.com/gofiber/fiber/v3/middleware/recover"
 	"github.com/gofiber/fiber/v3/middleware/requestid"
-	// "github.com/joho/godotenv"
 )
 
 func main() {
-	// err := godotenv.Load(".env")
-	// if err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
+
 	app := fiber.New(fiber.Config{
 		CaseSensitive:      true,
 		StrictRouting:      true,
@@ -35,6 +32,12 @@ func main() {
 	app.Use(logger.New())
 	app.Use(recover.New())
 	app.Use(requestid.New())
+	retry.NewExponentialBackoff(retry.Config{
+		InitialInterval: 2 * time.Second,
+		MaxBackoffTime:  4 * time.Second,
+		Multiplier:      2.0,
+		MaxRetryCount:   3,
+	})
 	SetupRouters.SetupRouters(app)
 	app.Listen(":8080")
 }

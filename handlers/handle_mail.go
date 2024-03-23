@@ -42,10 +42,12 @@ func Handle_mail(c fiber.Ctx) error {
 	m.SetHeader("From", get_var("mail_server_sender"))
 	m.SetHeader("To", get_var("mail_server_receiver"))
 	m.SetHeader("Subject", "Форма на лендинге")
-
+	mail_server_domain := get_var("mail_server_domain")
+	mail_server_sender := get_var("mail_server_sender")
+	mail_server_passwd := get_var("mail_server_passwd")
 	// Set the HTML body using the template result
 	m.SetBody("text/html", bodyContent.String())
-	d := mail.NewDialer(get_var("mail_server_domain"), 587, get_var("mail_server_sender"), get_var("mail_server_passwd"))
+	d := mail.NewDialer(mail_server_domain, 587, mail_server_sender, mail_server_passwd)
 	d.LocalName = "go_cy_form_mailer"
 	if err := d.DialAndSend(m); err != nil {
 		log.Print(d)
